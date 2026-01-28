@@ -1375,19 +1375,15 @@ client.on('messageCreate', async (message) => {
       
       // Si ambos métodos fallaron, intentar con nosis como último recurso
       if (!cuilParaAportes) {
-        // nosis.py solo acepta DNI de 7-9 dígitos, no acepta CUIL (11 dígitos)
-        if (dni.length === 11) {
-          // Es CUIL - nosis no puede procesar CUILs directamente
-          await message.channel.send(`❌ No se pudo obtener información. Nosis.com no puede procesar CUILs directamente`)
-        } else {
-          await message.channel.send(`🔄 Último intento: Chequeando en Nosis.com...`)
-          
-          try {
-            const url3 = `${CORE}/nosis?dni=${encodeURIComponent(dni)}${nombre ? '&nombre=' + encodeURIComponent(nombre) : ''}`
-            const res3 = await fetch(url3, {
-              headers: { 'X-CALI-Flow': 'true' }
-            })
-            const data3 = await res3.json()
+        await message.channel.send(`🔄 Último intento: Chequeando en Nosis.com...`)
+        
+        try {
+          // Usar el dni/cuil tal como está, sin extraer nada
+          const url3 = `${CORE}/nosis?dni=${encodeURIComponent(dni)}${nombre ? '&nombre=' + encodeURIComponent(nombre) : ''}`
+          const res3 = await fetch(url3, {
+            headers: { 'X-CALI-Flow': 'true' }
+          })
+          const data3 = await res3.json()
           
           if (data3.ok && data3.cuil && !data3.cuil.includes('@cuit@')) {
             // Caso 1: FILTERED_SINGLE - Se encontró 1 coincidencia con el filtro
@@ -1442,9 +1438,8 @@ client.on('messageCreate', async (message) => {
           } else {
             await message.channel.send(`❌ Nosis.com tampoco pudo obtener datos`)
           }
-          } catch (e3) {
-            await message.channel.send(`⚠️ Error en Nosis: ${e3.message}`)
-          }
+        } catch (e3) {
+          await message.channel.send(`⚠️ Error en Nosis: ${e3.message}`)
         }
       }
       
@@ -1917,19 +1912,15 @@ client.on('messageCreate', async (message) => {
       
       // Si ambos métodos fallaron, intentar con nosis como último recurso
       if (!cuilParaMonopago) {
-        // nosis.py solo acepta DNI de 7-9 dígitos, no acepta CUIL (11 dígitos)
-        if (dni.length === 11) {
-          // Es CUIL - nosis no puede procesar CUILs directamente
-          await message.channel.send(`❌ No se pudo obtener información. Nosis.com no puede procesar CUILs directamente`)
-        } else {
-          await message.channel.send(`🔄 Último intento: Chequeando en Nosis.com...`)
-          
-          try {
-            const url3 = `${CORE}/nosis?dni=${encodeURIComponent(dni)}${nombre ? '&nombre=' + encodeURIComponent(nombre) : ''}`
-            const res3 = await fetch(url3, {
-              headers: { 'X-CALI-Flow': 'true' }
-            })
-            const data3 = await res3.json()
+        await message.channel.send(`🔄 Último intento: Chequeando en Nosis.com...`)
+        
+        try {
+          // Usar el dni/cuil tal como está, sin extraer nada
+          const url3 = `${CORE}/nosis?dni=${encodeURIComponent(dni)}${nombre ? '&nombre=' + encodeURIComponent(nombre) : ''}`
+          const res3 = await fetch(url3, {
+            headers: { 'X-CALI-Flow': 'true' }
+          })
+          const data3 = await res3.json()
           
           if (data3.ok && data3.cuil && !data3.cuil.includes('@cuit@')) {
             if (data3.nombre === "FILTERED_SINGLE") {
@@ -1975,9 +1966,8 @@ client.on('messageCreate', async (message) => {
           } else {
             await message.channel.send(`❌ Nosis.com tampoco pudo obtener datos`)
           }
-          } catch (e3) {
-            await message.channel.send(`⚠️ Error en Nosis: ${e3.message}`)
-          }
+        } catch (e3) {
+          await message.channel.send(`⚠️ Error en Nosis: ${e3.message}`)
         }
       }
       
