@@ -1378,9 +1378,8 @@ client.on('messageCreate', async (message) => {
         await message.channel.send(`🔄 Último intento: Chequeando en Nosis.com...`)
         
         try {
-          // nosis.py solo acepta DNI de 7-9 dígitos
-          const dniLimpio = dni.length <= 11 && dni.length >= 7 ? dni.substring(dni.length - 8) : dni
-          const url3 = `${CORE}/nosis?dni=${encodeURIComponent(dniLimpio)}${nombre ? '&nombre=' + encodeURIComponent(nombre) : ''}`
+          // Usar el dni/cuil tal como está, sin extraer nada
+          const url3 = `${CORE}/nosis?dni=${encodeURIComponent(dni)}${nombre ? '&nombre=' + encodeURIComponent(nombre) : ''}`
           const res3 = await fetch(url3, {
             headers: { 'X-CALI-Flow': 'true' }
           })
@@ -1916,8 +1915,8 @@ client.on('messageCreate', async (message) => {
         await message.channel.send(`🔄 Último intento: Chequeando en Nosis.com...`)
         
         try {
-          const dniLimpio = dni.length <= 11 && dni.length >= 7 ? dni.substring(dni.length - 8) : dni
-          const url3 = `${CORE}/nosis?dni=${encodeURIComponent(dniLimpio)}${nombre ? '&nombre=' + encodeURIComponent(nombre) : ''}`
+          // Usar el dni/cuil tal como está, sin extraer nada
+          const url3 = `${CORE}/nosis?dni=${encodeURIComponent(dni)}${nombre ? '&nombre=' + encodeURIComponent(nombre) : ''}`
           const res3 = await fetch(url3, {
             headers: { 'X-CALI-Flow': 'true' }
           })
